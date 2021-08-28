@@ -14,6 +14,7 @@ __version__ = 'Testing 0.0.1'
 """ This portion is largely unchanged. Original comments by GWpy developer(s) - Duncan Macleod are also included.
     https://github.com/gwpy/gwpy/blob/26f63684db17104c5d552c30cdf01248b2ec76c9/gwpy/signal/qtransform.py
 """
+
 import warnings
 
 import numpy

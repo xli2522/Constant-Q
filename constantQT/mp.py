@@ -13,7 +13,7 @@ __version__ = 'Testing 0.0.1'
 
 """Utilities for multi-processing
     Not modified.
-    https://github.com/gwpy/gwpy/blob/v2.0.4/gwpy/utils/mp.py Copyright (C) Duncan Macleod (2017-2021)
+    Original: https://github.com/gwpy/gwpy/blob/v2.0.4/gwpy/utils/mp.py Copyright (C) Duncan Macleod (2017-2021)
 """
 
 import warnings

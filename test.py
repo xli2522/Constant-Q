@@ -15,6 +15,7 @@ __author__ = 'X. Li'
 import numpy as np
 import matplotlib.pyplot as plt
 from constantQT.timeseries import TimeSeries
+import time
 
 # Generate np.array chirp signal
 dt = 0.001
@@ -23,16 +24,26 @@ f0 = 50
 f1 = 250
 t1 = 2
 x = np.cos(2*np.pi*t*(f0 + (f1 - f0)*np.power(t, 2)/(3*t1**2)))
-print(len(x))
 fs = 1/dt
 
-series = TimeSeries(x, dt = 1/1000, unit='m', name='test', t0=0)     #np.array --> gwpy.timeseries
-
-plt.plot(series)
-#plt.show()
-
+# Constant Q Transform - not properly labeled 
+series = TimeSeries(x, dt = 0.001, unit='m', name='test', t0=0)     #np.array --> gwpy.timeseries    
 hdata = series
-sq = hdata.q_transform(frange=(30, 500),search=None)
-print(sq)
-print(len(sq[100]))
-print(len(sq))
+dstTime = time.time()
+sq = hdata.q_transform(search=None)
+current = time.time()
+print('DST Time: '+str(current - dstTime))
+plt.imshow(sq.T, origin='lower')
+#plt.pcolor(sq.T)
+plt.colorbar()
+plt.show()
+
+# Discrete Time Fourier Transform - not properly labeled 
+from scipy import signal as scisignal
+dtftTime = time.time()
+freq, ts, Sxx = scisignal.spectrogram(x)
+print('DTFT Time: '+str(time.time() - dtftTime))
+plt.figure()
+plt.pcolor(ts, freq, Sxx, shading='auto')
+plt.colorbar()
+plt.show()

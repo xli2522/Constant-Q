@@ -11,6 +11,10 @@
 # 
 __version__ = 'Testing 0.0.1'
 
+""" Functions in this file are largely unchanged. Original comments by GWpy developer(s) - Duncan Macleod are also included.
+    Source GWpy file is commented above each function.      Detailed comments see: https://github.com/gwpy/gwpy
+"""
+
 import sys
 import numpy
 import math
@@ -101,25 +105,6 @@ from scipy.special import expit
 # window
 def canonical_name(name):
     """Find the canonical name for the given window in scipy.signal
-    Parameters
-    ----------
-    name : `str`
-        the name of the window you want
-    Returns
-    -------
-    realname : `str`
-        the name of the window as implemented in `scipy.signal.window`
-    Raises
-    -------
-    ValueError
-        if ``name`` cannot be resolved to a window function in `scipy.signal`
-    Examples
-    --------
-    >>> from gwpy.signal.window import canonical_name
-    >>> canonical_name('hanning')
-    'hann'
-    >>> canonical_name('ksr')
-    'kaiser'
     """
     if name.lower() == 'planck':  # make sure to handle the Planck window
         return 'planck'
@@ -148,25 +133,6 @@ ROV = {
 # window
 def recommended_overlap(name, nfft=None):
     """Returns the recommended fractional overlap for the given window
-    If ``nfft`` is given, the return is in samples
-    Parameters
-    ----------
-    name : `str`
-        the name of the window you are using
-    nfft : `int`, optional
-        the length of the window
-    Returns
-    -------
-    rov : `float`, `int`
-        the recommended overlap (ROV) for the given window, in samples if
-        ``nfft` is given (`int`), otherwise fractional (`float`)
-    Examples
-    --------
-    >>> from gwpy.signal.window import recommended_overlap
-    >>> recommended_overlap('hann')
-    0.5
-    >>> recommended_overlap('blackmanharris', nfft=128)
-    85
     """
     try:
         name = canonical_name(name)
@@ -185,33 +151,6 @@ def recommended_overlap(name, nfft=None):
 # window
 def planck(N, nleft=0, nright=0):
     """Return a Planck taper window.
-    Parameters
-    ----------
-    N : `int`
-        Number of samples in the output window
-    nleft : `int`, optional
-        Number of samples to taper on the left, should be less than `N/2`
-    nright : `int`, optional
-        Number of samples to taper on the right, should be less than `N/2`
-    Returns
-    -------
-    w : `ndarray`
-        The window, with the maximum value normalized to 1 and at least one
-        end tapered smoothly to 0.
-    Examples
-    --------
-    To taper 0.1 seconds on both ends of one second of data sampled at 2048 Hz:
-    >>> from gwpy.signal.window import planck
-    >>> w = planck(2048, nleft=205, nright=205)
-    References
-    ----------
-    .. [1] McKechan, D.J.A., Robinson, C., and Sathyaprakash, B.S. (April
-           2010). "A tapering window for time-domain templates and simulated
-           signals in the detection of gravitational waves from coalescing
-           compact binaries". Classical and Quantum Gravity 27 (8).
-           :doi:`10.1088/0264-9381/27/8/084020`
-    .. [2] Wikipedia, "Window function",
-           https://en.wikipedia.org/wiki/Window_function#Planck-taper_window
     """
     # construct a Planck taper window
     w = numpy.ones(N)
