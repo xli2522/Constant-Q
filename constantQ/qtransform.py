@@ -1,12 +1,29 @@
 # A Constant Q Transform based on *GWpy qtransform* 
 #   The creation of this program was inspired by the need to include a CQT package 
 #       with minimal size and dependency for SHARCNET (ComputeCanada) Supercomputer Clusters.
-# 
-# IMPORTANT: All credits for the original Q transform algorithm go to the authors of *GWpy* and *Omega* pipeline.
+#
+# Copyright (C) 2021 Xiyuan Li
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# IMPORTANT DISCLAIMER: All credits for the original Q transform algorithm go to the authors of *GWpy* and *Omega* pipeline.
 # See original algorithms at: [Omega Scan] https://gwdetchar.readthedocs.io/en/stable/omega/
 #                             [GWpy] https://gwpy.github.io/docs/stable/
 #          particularly       [GWpy qtransform]
 #              - https://github.com/gwpy/gwpy/blob/26f63684db17104c5d552c30cdf01248b2ec76c9/gwpy/signal/qtransform.py
+#
+# The license information does NOT imply this package (constantQ) as the original q transform/q scan algorithm.
 # NOTE: Referenced programs are under the GNU license 
 # 
 __version__ = 'Testing 0.0.1'
@@ -21,8 +38,8 @@ import numpy
 from numpy import fft as npfft
 from math import (log, ceil, pi, isinf, exp)
 
-from constantQT.segments import Segment
-from constantQT.utilityaccess import (round_to_power)
+from constantQ.segments import Segment
+from constantQ.utilityaccess import (round_to_power)
 
 ################### Table (EventTable) related ###################
 # in GWpy - https://github.com/gwpy/gwpy/blob/v2.0.4/gwpy/table/table.py
@@ -308,7 +325,7 @@ class QTile(QBase):
             epoch = fseries.epoch
         tdenergy = npfft.ifft(wenergy)
 
-        from constantQT.timeseries import TimeSeries
+        from constantQ.timeseries import TimeSeries
         cenergy = TimeSeries(tdenergy, x0=epoch,
                              dx=self.duration/tdenergy.size, copy=False)
         energy = type(cenergy)(
@@ -367,7 +384,7 @@ class QGram(object):
         nx = xout.size
         ny = frequencies.size
         
-        from constantQT.spectrogram import Spectrogram
+        from constantQ.spectrogram import Spectrogram
         out = Spectrogram(numpy.empty((nx, ny), dtype=dtype),
                           t0=outseg[0], dt=tres, frequencies=frequencies)
         # record Q in output
@@ -439,7 +456,7 @@ def q_scan(data, mismatch=DEFAULT_MISMATCH, qrange=DEFAULT_QRANGE,
     """Transform data by scanning over a `QTiling`
     """
     # prepare input
-    from constantQT.timeseries import TimeSeries
+    from constantQ.timeseries import TimeSeries
     if isinstance(data, TimeSeries):
         duration = abs(data.span)
         sampling = data.sample_rate.to('Hz').value

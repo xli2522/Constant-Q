@@ -27,43 +27,14 @@
 # NOTE: Referenced programs are under the GNU license 
 # 
 __version__ = 'Testing 0.0.1'
-__author__ = 'X. Li'
 
-import numpy as np
-import matplotlib.pyplot as plt
-from constantQ.timeseries import TimeSeries
-import time
+""" Functions in this file are largely unchanged. Original comments by GWpy developer(s) - Duncan Macleod are also included.
+    Source GWpy file is commented above each function.      Detailed comments see: https://github.com/gwpy/gwpy
+"""
 
-# Generate np.array chirp signal
-dt = 0.001
-t = np.arange(0,3,dt)
-f0 = 50
-f1 = 250
-t1 = 2
-x = np.cos(2*np.pi*t*(f0 + (f1 - f0)*np.power(t, 2)/(3*t1**2)))
-fs = 1/dt
+# temp unused
+# cache windows and FFT plans internally
+LAL_WINDOWS = {}
+LAL_FFTPLANS = {}
+LAL_FFTPLAN_LEVEL = 1
 
-# Constant Q Transform - not properly labeled 
-series = TimeSeries(x, dt = 0.001, unit='m', name='test', t0=0)     #np.array --> gwpy.timeseries    
-hdata = series
-dstTime = time.time()
-sq = hdata.q_transform(search=None)
-print(len(sq[0]))       # freq N
-print(len(sq))          # time N
-
-current = time.time()
-print('DST Time: '+str(current - dstTime))
-plt.imshow(sq.T, origin='lower')
-#plt.pcolor(sq.T)
-plt.colorbar()
-plt.show()
-
-# Discrete Time Fourier Transform - not properly labeled 
-from scipy import signal as scisignal
-dtftTime = time.time()
-freq, ts, Sxx = scisignal.spectrogram(x)
-print('DTFT Time: '+str(time.time() - dtftTime))
-
-plt.pcolor(ts, freq, Sxx, shading='auto')
-plt.colorbar()
-plt.show()
