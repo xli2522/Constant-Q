@@ -1,3 +1,4 @@
+[![PyPI version](https://badge.fury.io/py/constantQ.svg)](https://badge.fury.io/py/constantQ)
 ## A Constant Q Transform based on GWpy qtransform
 
 The creation of this program was inspired by the need to include a CQT package with minimal size and dependency for SHARCNET (ComputeCanada) Supercomputer Clusters.
